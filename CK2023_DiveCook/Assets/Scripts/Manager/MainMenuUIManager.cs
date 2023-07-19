@@ -11,6 +11,7 @@ namespace Manager
             settingUI.SetActive(false);
         }
 
+
         public void OpenSetting()
         {
             settingUI.SetActive(true);
