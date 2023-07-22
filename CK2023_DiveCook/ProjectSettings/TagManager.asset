@@ -5,16 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Water
-  - ToWater
+  - Fish
+  - Despawn
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Fish
+  - Wall
   - 
   - 
   - 
