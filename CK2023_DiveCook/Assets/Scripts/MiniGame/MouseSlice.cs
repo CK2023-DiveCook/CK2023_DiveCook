@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(LineRenderer))]
 public class MouseSlice : MonoBehaviour
 {
     public float minimumCuttingSpeed = 1f;
+    public GameObject specificObject;
     LineRenderer lineRenderer;
     List<Vector2> points;
 
@@ -16,13 +18,13 @@ public class MouseSlice : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if(points == null)
+            if (points == null)
             {
-                points= new List<Vector2> { mousePosition, mousePosition };
+                points = new List<Vector2> { mousePosition, mousePosition };
                 lineRenderer.SetPosition(0, points[0]);
                 lineRenderer.SetPosition(1, points[1]);
             }
@@ -34,14 +36,17 @@ public class MouseSlice : MonoBehaviour
         }
         else if (points != null)
         {
-            if(IsMouseMovingFastEnough())
+            Collider2D hit = Physics2D.OverlapArea(points[0], points[1], LayerMask.GetMask("Default"));
+            if (hit != null && hit.gameObject == specificObject)
             {
                 Cut();
+                specificObject.SetActive(false);
             }
 
             points = null;
         }
     }
+
     private bool IsMouseMovingFastEnough()
     {
         float mouseSpeed = (points[1] - points[0]).magnitude / Time.deltaTime;
@@ -53,7 +58,7 @@ public class MouseSlice : MonoBehaviour
         foreach (var cuttable in FindObjectsOfType<Cuttable>())
         {
             Vector2 objectPosition = cuttable.transform.position;
-            if(IsUnderneathCut(objectPosition))
+            if (IsUnderneathCut(objectPosition))
             {
                 cuttable.Split();
             }
@@ -69,9 +74,7 @@ public class MouseSlice : MonoBehaviour
         {
             return false;
         }
-
         float dotProduct = Vector3.Dot(points[1] - points[0], objectPosition - points[0]);
         return dotProduct > 0;
     }
-
 }
