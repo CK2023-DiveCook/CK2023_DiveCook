@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 5
+  Step: 1
 --- !u!212 &511267113
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 1
+  Step: 5
 --- !u!212 &608822230
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -594,11 +594,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprites:
   - {fileID: 21300000, guid: 38407b4b5d9c08343aaedc6017b6208e, type: 3}
+  - {fileID: 21300000, guid: 78398d4aa3ea15b42918f19c8b55493e, type: 3}
   - {fileID: 21300000, guid: dd8aa05fd24517a4eb470e2edfab48d1, type: 3}
   - {fileID: 21300000, guid: 19a4421c4294bd24382c4016d54d203b, type: 3}
   - {fileID: 21300000, guid: 832d833ffc06b5c458b451ec67b72861, type: 3}
   - {fileID: 21300000, guid: 78398d4aa3ea15b42918f19c8b55493e, type: 3}
-  - {fileID: 21300000, guid: 7379fa222e30f6249938b6b46c513bfc, type: 3}
 --- !u!1 &992476103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumCuttingSpeed: 1
+  specificObject: {fileID: 0}
 --- !u!120 &1570548209
 LineRenderer:
   serializedVersion: 2
@@ -1346,7 +1347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 2
+  Step: 4
 --- !u!212 &1746972433
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1490,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 4
+  Step: 2
 --- !u!212 &1783362771
 SpriteRenderer:
   m_ObjectHideFlags: 0
