@@ -37,13 +37,13 @@ public class Line : MonoBehaviour
         if(Step == manager.GetCuttingNumber())
         {
             manager.CuttingGageUp();
-            if(manager.GetCuttingGage() == 6)
-            {
+            /*if(manager.GetCuttingGage() == 6)
+            {*/
                 manager.ChangeImage();
                 manager.CuttingNumberUp();
-                manager.CuttingGageReset();
+                /*manager.CuttingGageReset();*/
                 gameObject.SetActive(false);
-            }
+            /*}*/
 
         }
 

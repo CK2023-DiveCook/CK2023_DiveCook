@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 5
+  Step: 1
 --- !u!212 &511267113
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 1
+  Step: 5
 --- !u!212 &608822230
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1059,6 +1059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumCuttingSpeed: 1
+  specificObject: {fileID: 0}
 --- !u!120 &1570548209
 LineRenderer:
   serializedVersion: 2
@@ -1346,7 +1347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 2
+  Step: 4
 --- !u!212 &1746972433
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1490,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e25528271ab1cf48b8f93b5ccbadc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Step: 4
+  Step: 2
 --- !u!212 &1783362771
 SpriteRenderer:
   m_ObjectHideFlags: 0
