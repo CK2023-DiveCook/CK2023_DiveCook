@@ -8,6 +8,7 @@ namespace Manager
 {
     public enum FishType
     {
+        None,
         S,
         M,
         L

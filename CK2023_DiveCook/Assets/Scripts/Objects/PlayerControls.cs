@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Objects
 {
@@ -6,6 +7,8 @@ namespace Objects
     {
         [SerializeField] private Vector2 speed = new Vector2(50, 50);
         [SerializeField] private bool isSwimming = false;
+        [SerializeField] private GameObject [] inventory = new GameObject[5];
+        private int inventoryIdx = 0;
         private SpriteRenderer spriteRenderer;
         private new Rigidbody2D rigidbody2D;
     
@@ -20,11 +23,11 @@ namespace Objects
         {
             if (other.CompareTag("Water"))
             {
-                rigidbody2D.gravityScale = 3;
+                rigidbody2D.gravityScale = 20;
                 rigidbody2D.drag = 0;
                 isSwimming = false;
                 transform.Rotate(0,0,-90);
-                transform.Translate(new Vector3(0, 0.5f, 0),Space.World);
+                transform.Translate(new Vector3(0, 2f, 0),Space.World);
                 //_rigidbody2D.velocity = new Vector2(0 , 50);
             }
         }
@@ -39,6 +42,19 @@ namespace Objects
                 transform.Translate(new Vector3(0, -0.5f, 0), Space.World);
             }
         }
+        
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            Manager.FishType fishType;
+            
+            if (col.transform.CompareTag("Fish"))
+            {
+                fishType = col.transform.GetComponent<Fish>().Catch();
+                inventory[inventoryIdx].GetComponent<FishBag>().SetImage(fishType);
+                inventoryIdx++;
+            }
+        }
+        
         private void Move()
         {
             Vector2 movement;

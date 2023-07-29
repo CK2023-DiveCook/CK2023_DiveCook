@@ -35,4 +35,9 @@ public class Fish : MonoBehaviour
             objectPoolManager.ReturnFish(this.gameObject, fishType);
         }
     }
+    public Manager.FishType Catch()
+    {
+        objectPoolManager.ReturnFish(this.gameObject, fishType);
+        return fishType;
+    }
 }
