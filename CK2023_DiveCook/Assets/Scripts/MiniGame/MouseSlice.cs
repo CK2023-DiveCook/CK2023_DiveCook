@@ -10,6 +10,7 @@ public class MouseSlice : MonoBehaviour
     public GameObject specificObject;
     LineRenderer lineRenderer;
     List<Vector2> points;
+    [SerializeField] Manager.MiniGameManager miniGameManager;
 
     private void Awake()
     {
@@ -22,9 +23,11 @@ public class MouseSlice : MonoBehaviour
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+
             if (points == null)
             {
                 points = new List<Vector2> { mousePosition, mousePosition };
+                lineRenderer.positionCount = 2;
                 lineRenderer.SetPosition(0, points[0]);
                 lineRenderer.SetPosition(1, points[1]);
             }
@@ -36,45 +39,48 @@ public class MouseSlice : MonoBehaviour
         }
         else if (points != null)
         {
-            Collider2D hit = Physics2D.OverlapArea(points[0], points[1], LayerMask.GetMask("Default"));
-            if (hit != null && hit.gameObject == specificObject)
-            {
-                Cut();
-                specificObject.SetActive(false);
-            }
+            Collider2D[] colliders = Physics2D.OverlapAreaAll(points[0], points[1], LayerMask.GetMask("Default"));
 
+            foreach (var collider in colliders)
+            {
+                if (collider.gameObject == specificObject)
+                {
+                    if (IsColliderFullyWithinLine(collider))
+                    {
+                        Cut();
+                        specificObject.SetActive(false);
+                    }
+                }
+            }
+            lineRenderer.positionCount = 0;
             points = null;
         }
     }
-
-    private bool IsMouseMovingFastEnough()
-    {
-        float mouseSpeed = (points[1] - points[0]).magnitude / Time.deltaTime;
-        return mouseSpeed >= minimumCuttingSpeed;
-    }
-
     private void Cut()
     {
         foreach (var cuttable in FindObjectsOfType<Cuttable>())
         {
             Vector2 objectPosition = cuttable.transform.position;
-            if (IsUnderneathCut(objectPosition))
-            {
-                cuttable.Split();
-            }
+
+            cuttable.Split();
+            miniGameManager.Success();
         }
     }
 
-    bool IsUnderneathCut(Vector2 objectPosition)
+    private bool IsColliderFullyWithinLine(Collider2D collider)
     {
-        float distanceFromStart = Vector2.Distance(objectPosition, points[0]);
-        float distanceFromEnd = Vector2.Distance(objectPosition, points[1]);
+        Bounds bounds = collider.bounds;
+        bool isColliderFullyWithinLine = true;
 
-        if (distanceFromStart + distanceFromEnd > (points[1] - points[0]).magnitude + 0.01f)
+        foreach (var point in new Vector3[] { bounds.min, bounds.max })
         {
-            return false;
+            if (!lineRenderer.bounds.Contains(point))
+            {
+                isColliderFullyWithinLine = false;
+                break;
+            }
         }
-        float dotProduct = Vector3.Dot(points[1] - points[0], objectPosition - points[0]);
-        return dotProduct > 0;
+
+        return isColliderFullyWithinLine;
     }
 }

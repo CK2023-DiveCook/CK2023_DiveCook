@@ -27,7 +27,7 @@ public class Line : MonoBehaviour
 
     public void click()
     {
-        MiniGameManager manager = FindObjectOfType<MiniGameManager>();
+        Manager.MiniGameManager manager = FindObjectOfType<Manager.MiniGameManager>();
 
         if(manager != null )
         {
@@ -42,6 +42,10 @@ public class Line : MonoBehaviour
                 manager.ChangeImage();
                 manager.CuttingNumberUp();
                 /*manager.CuttingGageReset();*/
+            if(manager.GetCuttingNumber() == 6)
+            {
+                manager.Success();
+            }
                 gameObject.SetActive(false);
             /*}*/
 
