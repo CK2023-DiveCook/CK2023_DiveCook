@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class FishBag : MonoBehaviour
     [SerializeField] private Sprite fishL;
 
     private Image _fishBagImage;
+    private FishType _fishType;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,22 +22,48 @@ public class FishBag : MonoBehaviour
 
     public void SetImage(Manager.FishType fishType)
     {
+        _fishType = fishType;
         switch (fishType)
         {
-            case Manager.FishType.None :
+            case FishType.None :
                 _fishBagImage.sprite = fishEmpty;
                 return;
-            case Manager.FishType.L :
+            case FishType.L :
                 _fishBagImage.sprite = fishL;
                 return;
-            case Manager.FishType.M :
+            case FishType.M :
                 _fishBagImage.sprite = fishM;
                 return;
-            case Manager.FishType.S :
+            case FishType.S :
                 _fishBagImage.sprite = fishS;
                 return;
             default:
                 throw new ArgumentOutOfRangeException(nameof(fishType), fishType, null);
         }
+    }
+    public int GetScore()
+    {
+        int returnScore = 0;
+        
+        switch (_fishType)
+        {
+            case FishType.L :
+                returnScore = 200;
+                break;
+            case FishType.M:
+                returnScore = 100;
+                break;
+            case FishType.S:
+                returnScore = 50;
+                break;
+            case FishType.None:
+                returnScore = 0;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        _fishType = FishType.None;
+        _fishBagImage.sprite = fishEmpty;
+        return returnScore;
     }
 }

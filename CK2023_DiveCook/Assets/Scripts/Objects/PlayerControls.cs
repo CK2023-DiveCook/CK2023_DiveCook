@@ -42,7 +42,15 @@ namespace Objects
                 transform.Translate(new Vector3(0, -0.5f, 0), Space.World);
             }
         }
-        
+        public int GetInventoryScore()
+        {
+            int score = 0;
+            
+            for (int i = 0; i < 5; i++)
+                score += inventory[i].GetComponent<FishBag>().GetScore();
+            inventoryIdx = 0;
+            return score;
+        }
         private void OnCollisionEnter2D(Collision2D col)
         {
             Manager.FishType fishType;
@@ -50,11 +58,12 @@ namespace Objects
             if (col.transform.CompareTag("Fish"))
             {
                 fishType = col.transform.GetComponent<Fish>().Catch();
+                if (inventoryIdx >= 5)
+                    return;
                 inventory[inventoryIdx].GetComponent<FishBag>().SetImage(fishType);
                 inventoryIdx++;
             }
         }
-        
         private void Move()
         {
             Vector2 movement;
