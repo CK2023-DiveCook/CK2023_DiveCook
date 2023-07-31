@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Manager
 {
@@ -11,6 +12,10 @@ namespace Manager
             settingUI.SetActive(false);
         }
 
+        public void StartGame()
+        {
+            SceneManager.LoadScene("Game");
+        }
 
         public void OpenSetting()
         {

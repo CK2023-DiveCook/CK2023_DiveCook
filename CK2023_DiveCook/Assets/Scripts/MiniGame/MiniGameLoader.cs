@@ -45,5 +45,6 @@ public class MiniGameLoader : MonoBehaviour
     public void EndCurrentScene()
     {
         SceneManager.UnloadSceneAsync(NowScene);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
     }
 }

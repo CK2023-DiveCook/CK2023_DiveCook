@@ -23,11 +23,11 @@ namespace Objects
         {
             if (other.CompareTag("Water"))
             {
-                rigidbody2D.gravityScale = 20;
+                rigidbody2D.gravityScale = 10;
                 rigidbody2D.drag = 0;
                 isSwimming = false;
                 transform.Rotate(0,0,-90);
-                transform.Translate(new Vector3(0, 2f, 0),Space.World);
+                transform.Translate(new Vector3(0, 1f, 0),Space.World);
                 //_rigidbody2D.velocity = new Vector2(0 , 50);
             }
         }

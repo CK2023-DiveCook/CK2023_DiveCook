@@ -314,7 +314,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1924848761}
         m_TargetAssemblyTypeName: Manager.MainMenuUIManager, Assembly-CSharp
-        m_MethodName: OpenSetting
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
