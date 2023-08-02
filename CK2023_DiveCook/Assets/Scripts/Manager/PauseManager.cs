@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    private bool isPaused = false;
+	private bool isPaused = false;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
-        }
-    }
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			TogglePause();
+		}
+	}
 
-    public void TogglePause()
-    {
-        if (isPaused)
-        {
-            ResumeGame();
-            Debug.Log("ÀÏ½ÃÁ¤Áö ÇØÁ¦");
-        }
-        else
-        {
-            PauseGame();
-            Debug.Log("ÀÏ½ÃÁ¤ÁöÁß");
-        }
-    }
+	public void TogglePause()
+	{
+		if (isPaused)
+		{
+			ResumeGame();
+			Debug.Log("ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		}
+		else
+		{
+			PauseGame();
+			Debug.Log("ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		}
+	}
 
-    public void PauseGame()
-    {
-        Time.timeScale = 0f;
-        isPaused = true;
-    }
+	public void PauseGame()
+	{
+		Time.timeScale = 0f;
+		isPaused = true;
+	}
 
-    public void ResumeGame()
-    {
-        Time.timeScale = 1f;
-        isPaused = false;
-    }
+	public void ResumeGame()
+	{
+		Time.timeScale = 1f;
+		isPaused = false;
+	}
 }

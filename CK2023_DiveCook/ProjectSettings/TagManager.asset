@@ -8,6 +8,7 @@ TagManager:
   - Fish
   - Despawn
   - Line
+  - SeaCurrent
   layers:
   - Default
   - TransparentFX

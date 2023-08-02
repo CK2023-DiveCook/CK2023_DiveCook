@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Cuttable : MonoBehaviour
 {
-    public GameObject fracturedObject;
+	public GameObject fracturedObject;
 
-    public void Split()
-    {
-        // ¿ø·¡ ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
-        gameObject.SetActive(false);
+	public void Split()
+	{
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+		gameObject.SetActive(false);
 
-        // ºÐ¿­µÈ ¿ÀºêÁ§Æ® »ý¼º
-        GameObject fractured = Instantiate(fracturedObject, transform.position, transform.rotation);
-        fractured.SetActive(true);
-    }
+		// ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+		GameObject fractured = Instantiate(fracturedObject, transform.position, transform.rotation);
+		fractured.SetActive(true);
+	}
 }

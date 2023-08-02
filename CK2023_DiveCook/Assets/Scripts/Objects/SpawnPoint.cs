@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum SpawnPos
 {
-    Right,
-    Left
+	Right,
+	Left
 }
 public class SpawnPoint : MonoBehaviour
 {
-    [SerializeField] public SpawnPos spawnPos;
+	[SerializeField] public SpawnPos spawnPos;
 }
