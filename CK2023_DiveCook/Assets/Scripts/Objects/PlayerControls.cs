@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,7 +13,7 @@ namespace Objects
 		
 		[SerializeField] private bool isSwimming = false;
 		[SerializeField] private bool inCurrent = false;
-		[SerializeField] private int currentWay = 0;
+		[SerializeField] private CurrentWay currentWay = CurrentWay.Null;
 		[SerializeField] private float currentForce = 2.5f;
 		
 		[SerializeField] private GameObject [] inventory = new GameObject[5];
@@ -96,8 +97,28 @@ namespace Objects
 			deltaX += inputX * speed.x;
 			if (isSwimming)
 				deltaY += inputY * speed.y;
-			if (inCurrent)
-				deltaX += currentForce * currentWay;
+			if (isSwimming && inCurrent)
+			{
+				switch (currentWay)
+				{
+					case CurrentWay.Up:
+						deltaY += currentForce * 1;
+						break;
+					case CurrentWay.Down:
+						deltaY += currentForce * -1;
+						break;
+					case CurrentWay.Left:
+						deltaX += currentForce * -1;
+						break;
+					case CurrentWay.Right:
+						deltaX += currentForce * 1;
+						break;
+					case CurrentWay.Null:
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
 			_rigidbody2D.velocity = new Vector2(deltaX, deltaY);
 		}
 		private void Anim()

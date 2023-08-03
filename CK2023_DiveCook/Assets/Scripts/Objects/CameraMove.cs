@@ -6,10 +6,14 @@ public class CameraMove : MonoBehaviour
 {
 	[SerializeField] private float cameraSpeed = 5.0f;
 	[SerializeField] private GameObject player;
-	private void Update()
+	[SerializeField] Vector3 difValue; //플레이어와 캠과의 거리
+	void Start()
 	{
-		Vector3 dir = player.transform.position - this.transform.position;
-		Vector3 moveVector = new Vector3(dir.x * cameraSpeed * Time.deltaTime, dir.y * cameraSpeed * Time.deltaTime, 0.0f);
-		this.transform.Translate(moveVector);
+		difValue = transform.position - player.transform.position;
+		difValue = new Vector3(0,0, difValue.z);
+	}
+	void FixedUpdate()
+	{
+		this.transform.position = Vector3.Lerp(this.transform.position, player.transform.position + difValue, cameraSpeed);
 	}
 }
