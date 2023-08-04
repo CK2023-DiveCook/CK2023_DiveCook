@@ -23,12 +23,14 @@ public class FishSpawner : MonoBehaviour
 	
 	private GameObject GetFish()
 	{
-		var type = Random.Range(0, 3);
+		var type = Random.Range(0, 5);
 		return type switch
 		{
-			0 => objectPoolManager.GetFish(FishType.S),
-			1 => objectPoolManager.GetFish(FishType.M),
-			2 => objectPoolManager.GetFish(FishType.L),
+			0 => objectPoolManager.GetFish(FishType.Small),
+			1 => objectPoolManager.GetFish(FishType.Medium),
+			2 => objectPoolManager.GetFish(FishType.Large),
+			3 => objectPoolManager.GetFish(FishType.Puff),
+			4 => objectPoolManager.GetFish(FishType.Shark),
 			_ => null
 		};
 	}

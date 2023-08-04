@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Objects;
 using Unity.VisualScripting;
@@ -9,21 +10,28 @@ namespace Manager
 	public enum FishType
 	{
 		None,
-		S,
-		M,
-		L
+		Small,
+		Medium,
+		Large,
+		Puff,
+		Shark,
+		Cnt
 	}
 	public class ObjectPoolManager : MonoBehaviour
 	{
 		[SerializeField] private GameObject sFish;
 		[SerializeField] private GameObject mFish;
 		[SerializeField] private GameObject lFish;
+		[SerializeField] private GameObject pFish;
+		[SerializeField] private GameObject shark;
 		
 		[SerializeField] private int poolSize = 20;
 		
 		[SerializeField] private List<GameObject> sFishPool;
 		[SerializeField] private List<GameObject> mFishPool;
 		[SerializeField] private List<GameObject> lFishPool;
+		[SerializeField] private List<GameObject> pFishPool;
+		[SerializeField] private List<GameObject> sharkPool;
 
 		// Start is called before the first frame update
 		private void Start()
@@ -31,10 +39,14 @@ namespace Manager
 			sFishPool = new List<GameObject>();
 			mFishPool = new List<GameObject>();
 			lFishPool = new List<GameObject>();
+			pFishPool = new List<GameObject>();
+			sharkPool = new List<GameObject>();
 			//리스트 생성
-			InitPool(sFishPool, sFish, FishType.S);
-			InitPool(mFishPool, mFish, FishType.M);
-			InitPool(lFishPool, lFish, FishType.L);
+			InitPool(sFishPool, sFish, FishType.Small);
+			InitPool(mFishPool, mFish, FishType.Medium);
+			InitPool(lFishPool, lFish, FishType.Large);
+			InitPool(pFishPool, pFish, FishType.Puff);
+			InitPool(sharkPool, shark, FishType.Shark);
 		}
 
 		private void InitPool(List<GameObject>pool, GameObject prefab, FishType type)
@@ -65,9 +77,11 @@ namespace Manager
 		{
 			return type switch
 			{
-				FishType.S => GetObjFromPool(sFishPool, sFish, type),
-				FishType.M => GetObjFromPool(mFishPool, mFish, type),
-				FishType.L => GetObjFromPool(lFishPool, lFish, type),
+				FishType.Small => GetObjFromPool(sFishPool, sFish, type),
+				FishType.Medium => GetObjFromPool(mFishPool, mFish, type),
+				FishType.Large => GetObjFromPool(lFishPool, lFish, type),
+				FishType.Puff => GetObjFromPool(pFishPool, pFish, type),
+				FishType.Shark => GetObjFromPool(sharkPool, shark, type),
 				_ => null
 			};
 		}
@@ -77,15 +91,23 @@ namespace Manager
 			obj.SetActive(false);
 			switch (type)
 			{
-				case FishType.S:
+				case FishType.Small:
 					sFishPool.Add(obj);
 					break;
-				case FishType.M:
+				case FishType.Medium:
 					mFishPool.Add(obj);
 					break;
-				case FishType.L:
+				case FishType.Large:
 					lFishPool.Add(obj);
 					break;
+				case FishType.Puff:
+					pFishPool.Add(obj);
+					break;
+				case FishType.Shark:
+					sharkPool.Add(obj);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(type), type, null);
 			}
 		}
 	}

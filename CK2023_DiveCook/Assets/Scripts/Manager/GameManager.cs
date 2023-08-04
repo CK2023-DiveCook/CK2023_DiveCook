@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Manager
 {
-	public class GameManager : MonoBehaviour
+	public class GameManager : Singleton<GameManager>
 	{
 		[SerializeField] private int score;
 		[SerializeField] private float timeLimit = 60f;
@@ -21,7 +21,6 @@ namespace Manager
 			_tic = new WaitForSeconds(ticTime);
 			StartCoroutine(Timer());
 		}
-
 		private IEnumerator Timer()
 		{
 			while (true)
@@ -32,17 +31,20 @@ namespace Manager
 			}
 			// ReSharper disable once IteratorNeverReturns
 		}
-
 		public void AddScore(int value)
 		{
 			score += value;
 			scoreTextMesh.text = "SCORE : " + score.ToString();
 		}
-
 		public void CalScore()
 		{
 			score += player.GetInventoryScore();
 			scoreTextMesh.text = "SCORE : " + score.ToString();
+		}
+		// ReSharper disable Unity.PerformanceAnalysis
+		public void GameOver()
+		{
+			Debug.Log("GameOver");
 		}
 	}
 }

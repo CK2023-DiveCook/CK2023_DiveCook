@@ -28,13 +28,13 @@ public class FishBag : MonoBehaviour
 			case FishType.None :
 				_fishBagImage.sprite = fishEmpty;
 				return;
-			case FishType.L :
+			case FishType.Large :
 				_fishBagImage.sprite = fishL;
 				return;
-			case FishType.M :
+			case FishType.Medium :
 				_fishBagImage.sprite = fishM;
 				return;
-			case FishType.S :
+			case FishType.Small :
 				_fishBagImage.sprite = fishS;
 				return;
 			default:
@@ -47,13 +47,13 @@ public class FishBag : MonoBehaviour
 		
 		switch (_fishType)
 		{
-			case FishType.L :
+			case FishType.Large :
 				returnScore = 200;
 				break;
-			case FishType.M:
+			case FishType.Medium:
 				returnScore = 100;
 				break;
-			case FishType.S:
+			case FishType.Small:
 				returnScore = 50;
 				break;
 			case FishType.None:
