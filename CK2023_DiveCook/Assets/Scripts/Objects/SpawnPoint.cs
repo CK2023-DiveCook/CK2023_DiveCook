@@ -10,4 +10,5 @@ public enum SpawnPos
 public class SpawnPoint : MonoBehaviour
 {
 	[SerializeField] public SpawnPos spawnPos;
+	[SerializeField] public int spawnLevel;
 }

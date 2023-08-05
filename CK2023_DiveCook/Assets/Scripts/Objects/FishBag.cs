@@ -11,6 +11,9 @@ public class FishBag : MonoBehaviour
 	[SerializeField] private Sprite fishS;
 	[SerializeField] private Sprite fishM;
 	[SerializeField] private Sprite fishL;
+	[SerializeField] private Sprite fishP;
+	[SerializeField] private Sprite shark;
+	[SerializeField] private Sprite urchin;
 
 	private Image _fishBagImage;
 	private FishType _fishType;
@@ -37,6 +40,16 @@ public class FishBag : MonoBehaviour
 			case FishType.Small :
 				_fishBagImage.sprite = fishS;
 				return;
+			case FishType.Puff:
+				_fishBagImage.sprite = fishP;
+				return;
+			case FishType.Shark:
+				_fishBagImage.sprite = shark;
+				return;
+			case FishType.Urchin:
+				_fishBagImage.sprite = urchin;
+				return;
+			case FishType.Cnt:
 			default:
 				throw new ArgumentOutOfRangeException(nameof(fishType), fishType, null);
 		}
@@ -47,18 +60,27 @@ public class FishBag : MonoBehaviour
 		
 		switch (_fishType)
 		{
-			case FishType.Large :
-				returnScore = 200;
+			case FishType.Small:
+				returnScore = 50;
 				break;
 			case FishType.Medium:
 				returnScore = 100;
 				break;
-			case FishType.Small:
-				returnScore = 50;
+			case FishType.Large :
+				returnScore = 200;
+				break;
+			case FishType.Puff:
+				returnScore = 500;
+				break;
+			case FishType.Urchin:
+				returnScore = 1200;
+				break;
+			case FishType.Shark:
+				returnScore = 10000;
 				break;
 			case FishType.None:
-				returnScore = 0;
 				break;
+			case FishType.Cnt:
 			default:
 				throw new ArgumentOutOfRangeException();
 		}

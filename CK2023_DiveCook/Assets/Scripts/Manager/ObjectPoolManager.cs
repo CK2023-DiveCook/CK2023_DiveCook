@@ -15,6 +15,7 @@ namespace Manager
 		Large,
 		Puff,
 		Shark,
+		Urchin,
 		Cnt
 	}
 	public class ObjectPoolManager : MonoBehaviour

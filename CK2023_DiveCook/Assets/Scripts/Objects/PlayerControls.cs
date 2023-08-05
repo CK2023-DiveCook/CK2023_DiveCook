@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using Manager;
 using Objects;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -16,43 +14,23 @@ public class PlayerControls : MonoBehaviour
 	[SerializeField] private bool inCurrent = false;
 	[SerializeField] private CurrentWay currentWay = CurrentWay.Null;
 	[SerializeField] private float currentForce = 2.5f;
-
-	[SerializeField] private bool stopOxygenCycle = false;
-	[SerializeField] private float oxygenLevel = 100;
-	[SerializeField] private Slider oxygenLevelSlider;
+	
 	[SerializeField] private GameObject [] inventory = new GameObject[5];
 	private int _inventoryIdx = 0;
 		
 	private SpriteRenderer _spriteRenderer;
 	private Rigidbody2D _rigidbody2D;
-	private WaitForSeconds _tic;
 
 	void Start()
 	{
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_spriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = gravityOnLand;
-		_tic = new WaitForSeconds(1);
-		StartCoroutine(OxygenCycle());
 	}
-	private IEnumerator OxygenCycle()
+
+	public bool IsSwimming()
 	{
-		while (!stopOxygenCycle)
-		{
-			yield return _tic;
-			AddOxygenLevel( -3.34f);
-		}
-	}
-	public void AddOxygenLevel(float val)
-	{
-		if (oxygenLevel + val <= 0)
-		{
-			GameManager.Instance.GameOver();
-			oxygenLevel = 0;
-		}
-		else
-			oxygenLevel += val;
-		oxygenLevelSlider.value = oxygenLevel;
+		return isSwimming;
 	}
 	public int GetInventoryScore()
 	{
@@ -105,7 +83,7 @@ public class PlayerControls : MonoBehaviour
 		if (col.transform.CompareTag("Fish"))
 		{
 			fishType = col.transform.GetComponent<Fish>().Catch();
-			if (_inventoryIdx >= 5)
+			if (fishType == FishType.None || _inventoryIdx >= 5)
 				return;
 			inventory[_inventoryIdx].GetComponent<FishBag>().SetImage(fishType);
 			_inventoryIdx++;
