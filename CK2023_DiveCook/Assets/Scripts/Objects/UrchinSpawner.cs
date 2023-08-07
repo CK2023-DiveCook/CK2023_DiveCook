@@ -47,6 +47,7 @@ public class UrchinSpawner : MonoBehaviour
             {
                 urchinObject.GetComponent<Fish>().isReady = true;
                 al = 1;
+                urchinObject.GetComponent<SpriteRenderer>().color = new Color(1, 0.5f, 0.5f, al);
             }
         }
     }
