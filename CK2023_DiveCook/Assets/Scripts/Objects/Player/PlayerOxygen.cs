@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,9 @@ public class PlayerOxygen : MonoBehaviour
 {
     [SerializeField] private bool stopOxygenCycle = false;
     [SerializeField] private float oxygenLevel = 100;
+    [SerializeField] private float oxygenMax = 100;
     [SerializeField] private float oxygenDecrease = -0.334f;
+    [SerializeField] public  float oxygenIncrease = 20f;
     [SerializeField] private Slider oxygenLevelSlider;
     [SerializeField] private float ticTime = 0.1f;
 
@@ -38,7 +41,12 @@ public class PlayerOxygen : MonoBehaviour
             oxygenLevel = 0;
         }
         else
-            oxygenLevel += val;
+        {
+            if (oxygenLevel + val > oxygenMax)
+                oxygenLevel = oxygenMax;
+            else
+                oxygenLevel += val;
+        }
         oxygenLevelSlider.value = oxygenLevel;
     }
 }

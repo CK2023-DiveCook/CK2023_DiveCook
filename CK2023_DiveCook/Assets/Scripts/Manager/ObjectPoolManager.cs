@@ -43,30 +43,30 @@ namespace Manager
 			pFishPool = new List<GameObject>();
 			sharkPool = new List<GameObject>();
 			//리스트 생성
-			InitPool(sFishPool, sFish, FishType.Small);
-			InitPool(mFishPool, mFish, FishType.Medium);
-			InitPool(lFishPool, lFish, FishType.Large);
-			InitPool(pFishPool, pFish, FishType.Puff);
-			InitPool(sharkPool, shark, FishType.Shark);
+			InitPool(sFishPool, sFish, FishType.Small, 0);
+			InitPool(mFishPool, mFish, FishType.Medium, 0);
+			InitPool(lFishPool, lFish, FishType.Large, 0);
+			InitPool(pFishPool, pFish, FishType.Puff, 5);
+			InitPool(sharkPool, shark, FishType.Shark, 50);
 		}
 
-		private void InitPool(List<GameObject>pool, GameObject prefab, FishType type)
+		private void InitPool(List<GameObject>pool, GameObject prefab, FishType type, int oxygenDecreaseVal)
 		{
 			for (int i = 0; i < poolSize; i++)
 			{
 				var newObj = Instantiate(prefab, this.transform, true);
 				pool.Add(newObj);
-				newObj.GetComponent<Fish>().Init(this, type);
+				newObj.GetComponent<Fish>().Init(this, type, oxygenDecreaseVal);
 				newObj.SetActive(false);
 			}
 		}
 
-		private GameObject GetObjFromPool(List<GameObject>pool, GameObject prefab, FishType type)
+		private GameObject GetObjFromPool(List<GameObject>pool, GameObject prefab, FishType type, int oxygenDecreaseVal)
 		{
 			if (pool.Count == 0)
 			{
 				var newObj = Instantiate(prefab, this.transform, true);
-				newObj.GetComponent<Fish>().Init(this, type);
+				newObj.GetComponent<Fish>().Init(this, type, oxygenDecreaseVal);
 				return newObj;
 			}
 			GameObject returnObj = pool[0];
@@ -78,11 +78,11 @@ namespace Manager
 		{
 			return type switch
 			{
-				FishType.Small => GetObjFromPool(sFishPool, sFish, type),
-				FishType.Medium => GetObjFromPool(mFishPool, mFish, type),
-				FishType.Large => GetObjFromPool(lFishPool, lFish, type),
-				FishType.Puff => GetObjFromPool(pFishPool, pFish, type),
-				FishType.Shark => GetObjFromPool(sharkPool, shark, type),
+				FishType.Small => GetObjFromPool(sFishPool, sFish, type, 0),
+				FishType.Medium => GetObjFromPool(mFishPool, mFish, type, 0),
+				FishType.Large => GetObjFromPool(lFishPool, lFish, type, 0),
+				FishType.Puff => GetObjFromPool(pFishPool, pFish, type, 5),
+				FishType.Shark => GetObjFromPool(sharkPool, shark, type, 50),
 				_ => null
 			};
 		}

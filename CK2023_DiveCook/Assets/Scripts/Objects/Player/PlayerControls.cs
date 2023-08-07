@@ -59,6 +59,14 @@ public class PlayerControls : MonoBehaviour
 			currentWay = 0;
 		}
 	}
+	
+	public void CatchFishManual(FishType fishType)
+	{
+		if (fishType is FishType.None or FishType.Shark || _inventoryIdx >= 5)
+			return;
+		inventory[_inventoryIdx].GetComponent<FishBag>().SetImage(fishType);
+		_inventoryIdx++;
+	}
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.CompareTag("Water"))
@@ -83,10 +91,16 @@ public class PlayerControls : MonoBehaviour
 		if (col.transform.CompareTag("Fish"))
 		{
 			fishType = col.transform.GetComponent<Fish>().Catch();
-			if (fishType == FishType.None || _inventoryIdx >= 5)
+			GetComponent<PlayerOxygen>().AddOxygenLevel(col.transform.GetComponent<Fish>().oxygenDecrease * -1);
+			if (fishType is FishType.None or FishType.Shark || _inventoryIdx >= 5)
 				return;
 			inventory[_inventoryIdx].GetComponent<FishBag>().SetImage(fishType);
 			_inventoryIdx++;
+		}
+		else if (col.transform.CompareTag("Bubble"))
+		{
+			GetComponent<PlayerOxygen>().AddOxygenLevel(GetComponent<PlayerOxygen>().oxygenIncrease);
+			col.gameObject.SetActive(false);
 		}
 	}
 	private void Move()

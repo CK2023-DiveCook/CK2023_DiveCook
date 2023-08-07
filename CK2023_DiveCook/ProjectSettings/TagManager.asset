@@ -9,6 +9,7 @@ TagManager:
   - Despawn
   - Line
   - SeaCurrent
+  - Bubble
   layers:
   - Default
   - TransparentFX

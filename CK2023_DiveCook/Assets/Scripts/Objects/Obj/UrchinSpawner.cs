@@ -17,7 +17,7 @@ public class UrchinSpawner : MonoBehaviour
         _tic = new WaitForSeconds(ticTime);
         for (var i = 0; i < urchinObjects.Count; i++)
         {
-            urchinObjects[i].GetComponent<Fish>().Init(null, FishType.Urchin);
+            urchinObjects[i].GetComponent<Fish>().Init(null, FishType.Urchin, 15);
             StartCoroutine(SpawnCycle(urchinObjects[i]));
         }
     }
@@ -47,7 +47,7 @@ public class UrchinSpawner : MonoBehaviour
             {
                 urchinObject.GetComponent<Fish>().isReady = true;
                 al = 1;
-                urchinObject.GetComponent<SpriteRenderer>().color = new Color(1, 0.5f, 0.5f, al);
+                urchinObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 0.8f, al);
             }
         }
     }
