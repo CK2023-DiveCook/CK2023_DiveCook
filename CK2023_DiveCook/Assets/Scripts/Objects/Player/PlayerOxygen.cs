@@ -29,7 +29,7 @@ public class PlayerOxygen : MonoBehaviour
         {
             yield return _tic;
             AddOxygenLevel(oxygenDecrease);
-            if (!_playerControls.IsSwimming())
+            if (true)
                 oxygenLevel = 100;
         }
     }

@@ -10,6 +10,7 @@ TagManager:
   - Line
   - SeaCurrent
   - Bubble
+  - Net
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Fish
   - Wall
   - Bubble
-  - 
+  - Net
   - 
   - 
   - 

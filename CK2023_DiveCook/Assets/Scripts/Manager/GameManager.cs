@@ -38,7 +38,6 @@ namespace Manager
 		}
 		public void CalScore()
 		{
-			score += player.GetInventoryScore();
 			scoreTextMesh.text = "SCORE : " + score.ToString();
 		}
 		// ReSharper disable Unity.PerformanceAnalysis

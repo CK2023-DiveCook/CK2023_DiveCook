@@ -2397,11 +2397,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861291210}
+  - component: {fileID: 861291214}
   - component: {fileID: 861291213}
   - component: {fileID: 861291215}
+  - component: {fileID: 861291216}
   - component: {fileID: 861291209}
   - component: {fileID: 861291211}
-  - component: {fileID: 861291214}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2469,7 +2470,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861291208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.9, y: 7.41, z: 0}
+  m_LocalPosition: {x: -15, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2534,19 +2535,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 5, y: 5}
-  gravityInWater: -1
-  gravityOnLand: -2
-  gravity: 0
-  isSwimming: 0
+  gravity: -1
   inCurrent: 0
   currentWay: 0
   currentForce: 4
-  inventory:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!50 &861291214
 Rigidbody2D:
   serializedVersion: 4
@@ -2560,8 +2552,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_LinearDrag: 5
+  m_AngularDrag: 3
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: fe4215df4271ac64395c61b674e88514, type: 2}
   m_IncludeLayers:
@@ -2569,7 +2561,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -2593,6 +2585,20 @@ MonoBehaviour:
   oxygenIncrease: 20
   oxygenLevelSlider: {fileID: 262013176}
   ticTime: 0.1
+--- !u!114 &861291216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861291208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7482e398cae6d545b3d14d5e85ba4c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  netCount: 5
+  netObject: {fileID: 190355817417364545, guid: 6a7696229f8ebc946ac8b9cca8d807ab, type: 3}
 --- !u!1 &862274377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4707,7 +4713,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014218769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16, y: 5, z: -10}
+  m_LocalPosition: {x: -15, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

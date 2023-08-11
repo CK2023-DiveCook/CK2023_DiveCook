@@ -59,4 +59,29 @@ public class Fish : MonoBehaviour
 		objectPoolManager.ReturnFish(this.gameObject, fishType);
 		return fishType;
 	}
+	public static int GetScore(FishType fishType)
+	{
+		switch (fishType)
+		{
+			case FishType.Small:
+				return 50;
+			case FishType.Medium:
+				return 100;
+			case FishType.Large :
+				return 200;
+			case FishType.Puff:
+				return 500;
+			case FishType.Urchin:
+				return 1200;
+			case FishType.Shark:
+				return 10000;
+			case FishType.None:
+				break;
+			case FishType.Cnt:
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+		return 0;
+	}
+	
 }
