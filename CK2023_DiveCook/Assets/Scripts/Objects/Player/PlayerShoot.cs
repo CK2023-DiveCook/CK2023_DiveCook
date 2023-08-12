@@ -1,4 +1,3 @@
-using System;
 using Obj;
 using UnityEngine;
 
@@ -6,25 +5,18 @@ namespace Player
 {
     public class PlayerShoot : MonoBehaviour
     {
-        [SerializeField] int netCount = 5;
+        [SerializeField] private int netCount = 5;
         [SerializeField] private GameObject netObject;
-        private Camera _camera;
-        private Vector2 _mouse;
-        private Vector3 aim;
-
-        private void Start()
-        {
-            _camera = Camera.main;
-        }
-
+        [SerializeField] private Camera mainCamera;
         private void Update()
         {
-            if (!Input.GetKeyDown(KeyCode.LeftShift)) return;
+            if (!Input.GetKeyDown(KeyCode.Mouse0)) return;
             if (netCount <= 0) return;
             
             var bulletInstance = Instantiate(netObject);
             var position = transform.position;
             bulletInstance.transform.position = position;
+            bulletInstance.GetComponent<Net>().SetRotate(mainCamera, GetComponent<PlayerControls>());
         }
     }
 }

@@ -1,6 +1,4 @@
-using System.Collections;
 using Manager;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Obj

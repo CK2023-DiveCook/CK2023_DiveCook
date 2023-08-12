@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
+using Obj;
 using UnityEngine;
 
 public class UrchinSpawner : MonoBehaviour
@@ -26,7 +27,7 @@ public class UrchinSpawner : MonoBehaviour
     private IEnumerator SpawnCycle(GameObject urchinObject)
     {
         var spawnTime = setSpawnTime;
-        var al = 0.1f;
+        var al = 0.2f;
 
         while (true)
         {
@@ -42,12 +43,14 @@ public class UrchinSpawner : MonoBehaviour
             }
             spawnTime -= 1;
             al += 0.01f;
+            if (al > 1)
+                al = 1;
             urchinObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, al);
             if (spawnTime <= 0)
             {
                 urchinObject.GetComponent<Fish>().isReady = true;
                 al = 1;
-                urchinObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 0.8f, al);
+                urchinObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1f, al);
             }
         }
     }

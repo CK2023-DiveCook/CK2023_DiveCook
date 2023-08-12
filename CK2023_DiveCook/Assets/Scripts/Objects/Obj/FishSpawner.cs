@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
+using Obj;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;

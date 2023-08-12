@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Manager;
+using Obj;
 using Objects;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -11,6 +14,11 @@ public class PlayerControls : MonoBehaviour
 	[SerializeField] private bool inCurrent = false;
 	[SerializeField] private CurrentWay currentWay = CurrentWay.Null;
 	[SerializeField] private float currentForce = 2.5f;
+	
+	[SerializeField] private List<AudioClip> fishSound;
+	[SerializeField] private AudioSource audioSource;
+	
+	private int _lastIdx = -1;
 	private Rigidbody2D _rigidbody2D;
 	private SpriteRenderer _spriteRenderer;
 
@@ -36,6 +44,17 @@ public class PlayerControls : MonoBehaviour
 		inCurrent = true;
 		currentWay = other.GetComponent<SeaCurrent>().GetCurrentWay();
 	}
+
+	public void PlaySound()
+	{
+		var idx = Random.Range(0, fishSound.Count);
+		while (idx == _lastIdx)
+		{
+			idx = Random.Range(0, fishSound.Count);
+		}
+		audioSource.PlayOneShot(fishSound[idx]);
+		_lastIdx = idx;
+	}
 	private void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.transform.CompareTag("Fish"))
@@ -44,6 +63,7 @@ public class PlayerControls : MonoBehaviour
 			GetComponent<PlayerOxygen>().AddOxygenLevel(col.transform.GetComponent<Fish>().oxygenDecrease * -1);
 			if (fishType is FishType.None or FishType.Shark)
 				return;
+			PlaySound();
 			GameManager.Instance.AddScore(Fish.GetScore(fishType));
 		}
 		else if (col.transform.CompareTag("Bubble"))

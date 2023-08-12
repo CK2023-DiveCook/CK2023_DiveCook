@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Obj
 {
@@ -11,31 +13,31 @@ namespace Obj
 	{
 		[SerializeField] private float destroyTime = 10;
 		[SerializeField] private GameObject bigNet;
-		[SerializeField] private float speed = 1;
-		private Camera _camera;
-		private Rigidbody _rigidbody;
+		[SerializeField] private float speed;
+
+		private PlayerControls player;
+		private bool _stop = false;
+		private Vector3 mousePosition;
 
 		private void Start()
 		{
-			_rigidbody = this.GetComponent<Rigidbody>();
-			_camera = Camera.main;
 			StartCoroutine(Destroyer(destroyTime));
 		}
 
-		// Update is called once per frame
+		public void SetRotate(Camera mainCamera, PlayerControls playerControls)
+		{
+			player = playerControls;
+			mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+			var position = transform.position;
+			transform.rotation = Quaternion.Euler(0,0,  Mathf.Atan2(mousePosition.y - position.y, mousePosition.x - position.x) * Mathf.Rad2Deg);
+			Debug.Log(transform.rotation.z);
+		}
 		void Update()
 		{
-			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-			Vector3 screenPoint = _camera.ScreenToWorldPoint(transform.position);
-			Vector3 direction = (Input.mousePosition - screenPoint);
-			direction.Normalize();
-			_rigidbody.AddForce(direction * speed, ForceMode.Impulse);
-			Vector3 dir;    
-			if (Physics.Raycast(ray, out RaycastHit hit, 30f))
-			{
-				dir = hit.point - this.transform.position;
-			}
-			
+			if (_stop)
+				GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+			else
+				transform.Translate(Vector2.right * (speed * Time.deltaTime));
 		}
 		public void OnCollisionEnter2D(Collision2D col)
 		{
@@ -49,13 +51,16 @@ namespace Obj
 					return;
 				}
 				GameManager.Instance.AddScore(Fish.GetScore(fishType));
+				player.PlaySound();
 				bigNet.gameObject.SetActive(true);
+				_stop = true;
 				StartCoroutine(Destroyer(0.1f));
 			}
 			else if (col.transform.CompareTag("Fish"))
 			{
 				
 			}
+			DoDestroy();
 		}
 		private void DoDestroy()
 		{
