@@ -139,12 +139,12 @@ public class Guv : MonoBehaviour
 
     IEnumerator WallStun()
     {
+        TakeDamage(250f );
         Debug.Log("1초 대기중");
         ChangeState(STATE.IDLE);
         yield return new WaitForSeconds(1f);
         Debug.Log("대기완료");
         ChangeState(STATE.MOVE);
-        CurrentHp -= 250;
         yield break;
     }
 

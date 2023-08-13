@@ -11,7 +11,7 @@ public class BossSpawner : MonoBehaviour
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        FishCount = 0;
+        FishCount = 40;
     }
     public void FishUpdate()
     {
