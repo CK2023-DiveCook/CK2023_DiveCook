@@ -164,7 +164,6 @@ public class Guv : MonoBehaviour
         Vector2 dir = (target.position - transform.position).normalized;
         yield return new WaitForSeconds(1.5f);
 
-        Vector3 chargeStartPosition = transform.position;
         float moveDistance = 0f;
 
         while (moveDistance < rushDistance)

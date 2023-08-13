@@ -11,12 +11,11 @@ public class BossSpawner : MonoBehaviour
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        FishCount = 40;
+        FishCount = 0;
     }
     public void FishUpdate()
     {
         FishCount++;
-        Debug.Log("물고기 잡음 : " + FishCount);
         if(FishCount >= 50)
         {
             FishCount = 0;

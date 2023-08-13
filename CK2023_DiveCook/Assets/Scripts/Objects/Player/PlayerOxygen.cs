@@ -14,6 +14,7 @@ public class PlayerOxygen : MonoBehaviour
     [SerializeField] public  float oxygenIncrease = 20f;
     [SerializeField] private Slider oxygenLevelSlider;
     [SerializeField] private float ticTime = 0.1f;
+    [SerializeField] ShipSpawner shipSpawner;
 
     private WaitForSeconds _tic;
     private PlayerControls _playerControls;
@@ -60,6 +61,7 @@ public class PlayerOxygen : MonoBehaviour
     {
         _playerControls = GetComponent<PlayerControls>();
         _tic = new WaitForSeconds(ticTime);
+        shipSpawner = GameObject.Find("ShipSpawner").GetComponent<ShipSpawner>();
         StartCoroutine(OxygenCycle());
         audioSource.clip = hartSound[0];
         audioSource.loop = true;
