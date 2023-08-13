@@ -1,3 +1,4 @@
+using Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class GuvShark : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Transform player;
     private Vector2 lastPlayerPosition;
+    private float startTime;
     public string Name { get; private set; } = "Guv_Shark";
     private float Hp = 400f;
     public float CurrentHp { get; private set; } = 400f;
@@ -18,22 +20,25 @@ public class GuvShark : MonoBehaviour
     private float Speed = 1.0f;
     private bool isMoving = true;
 
-    // 크기 관련
-    private float initialSizeX = 1f;
-    private float initialSizeY = 1f;
-    private float initialSpeed = 0.5f;
-    private float sizeGrowthRate = 0.1f;  // 10% 증가율
-    private float speedGrowthRate = 0.1f; // 10% 증가율
+    // 최종크기
+    private const float InitialTargetSizeX = 1f;
+    private const float InitialTargetSizeY = 1f;
+    private const float FinalTargetSizeX = 4f;
+    private const float FinalTargetSizeY = 4f;
+    private const float TargetSpeed = 5f;
 
-    private float sizeIncreaseRateX = (6f * 4.02f) / 10f * (1f / 6f); // 초당 가로 크기 증가율
-    private float sizeIncreaseRateY = (6f * 4.02f) / 10f * (1f / 6f); // 초당 세로 크기 증가율
-    private float speedIncreaseRate = 5.00f / 10f; // 초당 속도 증가율
+    private float initialSpeed = 1f;
+
+    [SerializeField] HpBar healthBar;
 
     private float maxTime = 10f;
-
+    private void Awake()
+    {
+        healthBar = GetComponentInChildren<HpBar>();
+    }
     private void Start()
     {
-        InvokeRepeating("IncreaseSizeAndSpeed", 1f, 1f); // 1초 후부터 매 초마다 호출
+        startTime = Time.timeSinceLevelLoad;
         player = GameObject.FindWithTag("Player").transform;
         lastPlayerPosition = (player.position - transform.position).normalized; ;
         if (player == null )
@@ -42,10 +47,25 @@ public class GuvShark : MonoBehaviour
         }
         Hp = 400f;
         CurrentHp = Hp;
+        healthBar.UpdateHealthBar(CurrentHp, Hp);
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
+        spriteFlip();
     }
-
+    private void Die()
+    {
+        GameManager.Instance.AddScore(10000);
+        gameObject.SetActive(false);
+    }
+    public void TakeDamage(float damageAmount)
+    {
+        CurrentHp -= damageAmount;
+        healthBar.UpdateHealthBar(CurrentHp, Hp);
+        if (CurrentHp <= 0)
+        {
+            Die();
+        }
+    }
     private void MoveTowardsPlayer()
     {
         float Movdis = initialSpeed* Time.deltaTime;
@@ -55,10 +75,32 @@ public class GuvShark : MonoBehaviour
     {
         if (isMoving)
         {
-            spriteFlip();
             MoveTowardsPlayer();
         }
+        IncreaseSizeAndSpeedSmoothly();
     }
+    private void IncreaseSizeAndSpeedSmoothly()
+    {
+        float elapsedTime = Time.timeSinceLevelLoad - startTime;
+        if (elapsedTime > maxTime) return;
+
+        float progress = elapsedTime / maxTime; // 0부터 1까지의 진행률
+
+        // Lerp를 사용하여 현재 크기 및 속도 계산
+        float newSizeX = Mathf.Lerp(InitialTargetSizeX, FinalTargetSizeX, progress);
+        float newSizeY = Mathf.Lerp(InitialTargetSizeY, FinalTargetSizeY, progress);
+        float newSpeed = Mathf.Lerp(0.5f, TargetSpeed, progress);
+
+        transform.localScale = new Vector3(newSizeX, newSizeY, 1f);
+        initialSpeed = newSpeed;
+
+        // 콜라이더 크기 조절
+        if (boxCollider)
+        {
+            boxCollider.size = spriteRenderer.sprite.bounds.size;
+        }
+    }
+
     private void spriteFlip()
     {
         if (player.position.x < transform.position.x)
@@ -72,56 +114,27 @@ public class GuvShark : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("충돌 감지");
+        Debug.Log("충돌 오브젝트 : " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Wall"))
         {
-            Debug.Log("벽 충돌 감지");
+            spriteFlip();
             isMoving = false;
+            // 벽에 부딪힐 때 플레이어의 현재 위치와의 방향 벡터를 계산하여 저장
+            lastPlayerPosition = (player.position - transform.position).normalized;
             Invoke("ResumeMovement", 0.5f);  // 0.5초 후에 움직임 재개
-            lastPlayerPosition = player.position; // 벽에 부딪힐 때만 플레이어의 현재 위치를 갱신
+        }
+        else if (collision.gameObject.CompareTag("Net"))
+        {
+            TakeDamage(10f);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerOxygen oxygen = collision.gameObject.GetComponent<PlayerOxygen>();
+            oxygen.AddOxygenLevel(-Damage);
         }
     }
-    private void IncreaseSizeAndSpeed()
-    {
-        if (Time.timeSinceLevelLoad > maxTime)
-        {
-            CancelInvoke("IncreaseSizeAndSpeed");  // 10초 후에 크기 및 속도 증가 중지
-            return;
-        }
-
-        // 현재 크기와 속도에 비례하여 증가
-        initialSizeX += initialSizeX * sizeGrowthRate;
-        initialSizeY += initialSizeY * sizeGrowthRate;
-        initialSpeed += initialSpeed * speedGrowthRate;
-
-        transform.localScale = new Vector3(initialSizeX, initialSizeY, 1f);
-
-        // 콜라이더 크기 조절
-        if (boxCollider)
-        {
-            float spriteWidth = spriteRenderer.sprite.bounds.size.x;
-            float spriteHeight = spriteRenderer.sprite.bounds.size.y;
-
-            boxCollider.size = new Vector2(spriteWidth * initialSizeX, spriteHeight * initialSizeY);
-        }
-    }
-    /*private void IncreaseSizeAndSpeed()
-    {
-        if (Time.timeSinceLevelLoad > maxTime)
-        {
-            CancelInvoke("IncreaseSizeAndSpeed");  // 10초 후에 크기 및 속도 증가 중지
-            return;
-        }
-
-        initialSizeX += sizeIncreaseRateX;
-        initialSizeY += sizeIncreaseRateY;
-        initialSpeed += speedIncreaseRate;   
-        transform.localScale = new Vector3(initialSizeX, initialSizeY, 1f);
-        boxCollider.size = new Vector2(initialSizeX, initialSizeY);
-    }*/
     private void ResumeMovement()
     {
         isMoving = true;
     }
-
 }

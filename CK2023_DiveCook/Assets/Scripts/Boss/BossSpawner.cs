@@ -20,7 +20,7 @@ public class BossSpawner : MonoBehaviour
         if(FishCount >= 50)
         {
             FishCount = 0;
-            SpawnRandomPrefab(0);
+            SpawnRandomPrefab(UnityEngine.Random.Range(0,3));
         }
     }
     public void SpawnRandomPrefab(int SpawnNum = 0)

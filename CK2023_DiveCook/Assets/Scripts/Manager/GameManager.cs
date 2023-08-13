@@ -43,7 +43,7 @@ namespace Manager
 		// ReSharper disable Unity.PerformanceAnalysis
 		public void GameOver()
 		{
-			Debug.Log("GameOver");
+			//Debug.Log("GameOver");
 		}
 	}
 }

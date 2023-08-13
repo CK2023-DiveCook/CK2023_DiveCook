@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using FSM;
+using Manager;
 
 public enum STATE
 {
@@ -57,6 +58,11 @@ public class Guv : MonoBehaviour
         currentState = STATE.MOVE;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    private void Die()
+    {
+        GameManager.Instance.AddScore(10000);
+        gameObject.SetActive(false);
+    }
 
     public void TakeDamage(float damageAmount)
     {
@@ -67,10 +73,7 @@ public class Guv : MonoBehaviour
             Die();
         }
     }
-    private void Die()
-    {
-        gameObject.SetActive(false);
-    }
+
     public void ChangeState(STATE state)
     {
         currentState = state;
@@ -139,7 +142,7 @@ public class Guv : MonoBehaviour
 
     IEnumerator WallStun()
     {
-        TakeDamage(250f );
+        TakeDamage(250f);
         Debug.Log("1초 대기중");
         ChangeState(STATE.IDLE);
         yield return new WaitForSeconds(1f);
