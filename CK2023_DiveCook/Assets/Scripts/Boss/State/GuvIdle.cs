@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FSM;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "GuvIdle", menuName = "FSM/GuvIdle", order = 1)]
 public class GuvIdle : StateBase<Guv>
 {
-    [SerializeField] StateBase<Guv> MoveState;
+    [SerializeField] StateBase<Guv> moveState;
     [SerializeField] StateBase<Guv> DieState;
     [SerializeField] StateBase<Guv> RushState;
     [SerializeField] StateBase<Guv> FaintState; // 기절
@@ -20,7 +21,7 @@ public class GuvIdle : StateBase<Guv>
     {
         if(guv.CurrentHp <= 0)
         {
-            guv.ChangeState(DieState);
+
             return;
         }
         else if(guv)
