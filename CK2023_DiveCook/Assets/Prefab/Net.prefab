@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7408151061241886625}
   m_Layer: 9
   m_Name: Net
-  m_TagString: Untagged
+  m_TagString: Net
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,15 +166,6 @@ MonoBehaviour:
   destroyTime: 20
   bigNet: {fileID: 2486772227502568140}
   speed: 10
-  fishSound:
-  - {fileID: 8300000, guid: ee700ccbc5f944296a03250282030b9d, type: 3}
-  - {fileID: 8300000, guid: 8f0669148ff0d49ac9432b9f317e61e6, type: 3}
-  - {fileID: 8300000, guid: 938f1b7f6248e4bb5aa9e44e5e545ff1, type: 3}
-  - {fileID: 8300000, guid: e4b50fe419cf342cc904798c7e745bd8, type: 3}
-  - {fileID: 8300000, guid: 5c7a542fe77f64a368486a3a26a9ed55, type: 3}
-  - {fileID: 8300000, guid: 36036c3d78b2a4cf0a4c2244b357da3c, type: 3}
-  - {fileID: 8300000, guid: 4019ce0499f004e4693b0b0e58767f11, type: 3}
-  audioSource: {fileID: 7408151061241886625}
 --- !u!82 &7408151061241886625
 AudioSource:
   m_ObjectHideFlags: 0

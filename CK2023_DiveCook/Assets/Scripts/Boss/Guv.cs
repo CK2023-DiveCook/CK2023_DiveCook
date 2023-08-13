@@ -38,8 +38,12 @@ public class Guv : MonoBehaviour
     private float rushArea = 10f;
     private float rushDistance = 10f;
     private bool rushCheck = true;
-  
+    [SerializeField] HpBar healthBar;
 
+    private void Awake()
+    {
+        healthBar = GetComponentInChildren<HpBar>();
+    }
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
@@ -49,10 +53,24 @@ public class Guv : MonoBehaviour
         }
         Hp = 900f;
         CurrentHp = Hp;
+        healthBar.UpdateHealthBar(CurrentHp, Hp);
         currentState = STATE.MOVE;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public void TakeDamage(float damageAmount)
+    {
+        CurrentHp -= damageAmount;
+        healthBar.UpdateHealthBar(CurrentHp, Hp);
+        if(CurrentHp <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        gameObject.SetActive(false);
+    }
     public void ChangeState(STATE state)
     {
         currentState = state;
@@ -98,12 +116,17 @@ public class Guv : MonoBehaviour
             Debug.Log("벽 충돌 감지");
             StartCoroutine(WallStun());
         }
+        else if(collision.gameObject.CompareTag("Net"))
+        {
+            TakeDamage(10f);
+        }
+        else if(collision.gameObject.CompareTag("Player"))
+        {
+            PlayerOxygen oxygen = collision.gameObject.GetComponent<PlayerOxygen>();
+            oxygen.AddOxygenLevel(-Damage);
+        }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 10f);
-    }
+
 
     private void RushDirCheck()
     {

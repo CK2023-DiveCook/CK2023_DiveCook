@@ -7,6 +7,7 @@ namespace Obj
 	public class Fish : MonoBehaviour
 	{
 		private ObjectPoolManager objectPoolManager;
+		private BossSpawner _spawner;
 		private Rigidbody2D _rigidbody2D;
 		
 		[SerializeField] private Manager.FishType fishType;
@@ -18,7 +19,8 @@ namespace Obj
 		private void Start()
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
-			isReady = false;
+			_spawner = GameObject.Find("BossSpawner").GetComponent<BossSpawner>();
+            isReady = false;
 		}
 		public void Init(ObjectPoolManager poolManager, FishType type, int oxygenDecreaseVal)
 		{
@@ -56,6 +58,7 @@ namespace Obj
 				isReady = false;
 				return fishType;
 			}
+			_spawner.FishUpdate();
 			objectPoolManager.ReturnFish(this.gameObject, fishType);
 			return fishType;
 		}

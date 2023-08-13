@@ -27,8 +27,9 @@ public class PlayerControls : MonoBehaviour
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_spriteRenderer = GetComponent<SpriteRenderer>();
 		_rigidbody2D.drag = 3;
-	
-		transform.Rotate(0,0,90);
+
+
+        transform.Rotate(0,0,90);
 		transform.Translate(new Vector3(0, -0.5f, 0), Space.World);
 	}
 
@@ -59,10 +60,12 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (col.transform.CompareTag("Fish"))
 		{
-			var fishType = col.transform.GetComponent<Fish>().Catch();
+
+            var fishType = col.transform.GetComponent<Fish>().Catch();
 			GetComponent<PlayerOxygen>().AddOxygenLevel(col.transform.GetComponent<Fish>().oxygenDecrease * -1);
 			if (fishType is FishType.None or FishType.Shark)
 				return;
+
 			PlaySound();
 			GameManager.Instance.AddScore(Fish.GetScore(fishType));
 		}

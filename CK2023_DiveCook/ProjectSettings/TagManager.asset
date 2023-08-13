@@ -11,6 +11,8 @@ TagManager:
   - SeaCurrent
   - Bubble
   - Net
+  - BossFish
+  - Wall
   layers:
   - Default
   - TransparentFX
